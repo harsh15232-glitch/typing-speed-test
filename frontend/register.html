@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Create account — Keystroke</title>
+<link rel="stylesheet" href="css/style.css" />
+<style>
+  .auth-shell { max-width: 420px; margin: 6vh auto; padding: 0 20px; }
+  .auth-card { background: var(--surface); border: 1px solid var(--border-soft); border-radius: var(--radius-lg); padding: 32px; box-shadow: var(--shadow-elevated); }
+  .auth-card h2 { margin-top: 0; }
+  .field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
+  .field label { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; }
+  .field input {
+    font-family: var(--font-mono); background: var(--surface-2); border: 1px solid var(--border);
+    color: var(--text); padding: 12px 14px; border-radius: var(--radius-sm); outline: none; font-size: 14px;
+  }
+  .field input:focus { border-color: var(--accent); }
+  .field small { color: var(--muted-2); }
+  .auth-error { color: var(--error); font-size: 13px; min-height: 18px; margin-bottom: 10px; }
+  .auth-switch { text-align: center; margin-top: 16px; font-size: 13px; color: var(--muted); }
+  .auth-card .btn-primary { width: 100%; padding: 13px; }
+</style>
+</head>
+<body>
+<div class="auth-shell">
+  <div class="brand" style="justify-content:center; margin-bottom:22px;"><span class="dot"></span> Keystroke</div>
+  <div class="auth-card">
+    <h2>Create your account</h2>
+    <p class="muted" style="margin-top:-8px;">Track your stats and compete in real-time races.</p>
+    <form id="registerForm">
+      <div class="field">
+        <label for="username">Username</label>
+        <input type="text" id="username" required minlength="3" maxlength="20" autocomplete="username" />
+        <small>3-20 characters: letters, numbers, underscore.</small>
+      </div>
+      <div class="field">
+        <label for="email">Email</label>
+        <input type="email" id="email" required autocomplete="email" />
+      </div>
+      <div class="field">
+        <label for="password">Password</label>
+        <input type="password" id="password" required minlength="8" autocomplete="new-password" />
+        <small>At least 8 characters.</small>
+      </div>
+      <div class="auth-error" id="authError"></div>
+      <button type="submit" class="btn btn-primary">Create account</button>
+    </form>
+    <div class="auth-switch">Already have an account? <a href="login.html" style="color:var(--accent);">Sign in</a></div>
+  </div>
+</div>
+
+<script src="js/config.js"></script>
+<script src="js/auth.js"></script>
+<script>
+  document.getElementById("registerForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const username = document.getElementById("username").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value;
+    const errBox = document.getElementById("authError");
+    errBox.textContent = "";
+    try {
+      await Auth.registerUser({ username, email, password });
+      window.location.href = "index.html";
+    } catch (err) {
+      errBox.textContent = err.message || "Registration failed. Check the backend is running.";
+    }
+  });
+</script>
+</body>
+</html>

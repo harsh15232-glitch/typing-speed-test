@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+<title>Keystroke — Typing Speed Test</title>
+<meta name="description" content="A modern, responsive typing speed test with real-time WPM, accuracy tracking, and multiplayer races." />
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<div class="shell">
+  <header class="topbar">
+    <div class="brand"><span class="dot"></span> Keystroke</div>
+    <nav class="nav-links">
+      <a class="btn btn-ghost" href="multiplayer.html">Multiplayer race →</a>
+      <a class="btn btn-ghost" id="loginNavLink" href="login.html">Sign in</a>
+    </nav>
+  </header>
+
+  <!-- Controls: duration + difficulty -->
+  <div class="controls-bar">
+    <div class="control-group">
+      <span class="control-label">Duration</span>
+      <div class="chip-row">
+        <button class="chip" data-duration="60">1 min</button>
+        <button class="chip" data-duration="180">3 min</button>
+        <button class="chip" data-duration="300">5 min</button>
+        <button class="chip" data-duration="420">7 min</button>
+        <button class="chip" data-duration="600">10 min</button>
+        <button class="chip" data-duration="900">15 min</button>
+      </div>
+    </div>
+    <div class="control-group">
+      <span class="control-label">Difficulty</span>
+      <div class="chip-row">
+        <button class="chip" data-difficulty="easy">Easy</button>
+        <button class="chip" data-difficulty="medium">Medium</button>
+        <button class="chip" data-difficulty="hard">Hard</button>
+        <button class="chip" data-difficulty="quotes">Quotes</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Live stats -->
+  <div class="stats-strip">
+    <div class="stat-box"><div class="stat-value" id="wpmLive">0</div><div class="stat-label">WPM</div></div>
+    <div class="stat-box"><div class="stat-value" id="accLive">100%</div><div class="stat-label">Accuracy</div></div>
+    <div class="stat-box"><div class="stat-value" id="timeLive">01:00</div><div class="stat-label">Time left</div></div>
+  </div>
+
+  <div class="progress-track"><div class="progress-bar" id="progressBar"></div></div>
+
+  <!-- Typing card -->
+  <div class="typing-card" id="typingCard">
+    <div class="typing-area" id="typingArea">
+      <div class="words-display" id="wordsDisplay"></div>
+      <div class="caret" id="caret"></div>
+      <textarea class="hidden-input" id="hiddenInput" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></textarea>
+      <div class="start-overlay" id="startOverlay">Start typing to begin · press <kbd>Tab</kbd> for a new test</div>
+    </div>
+    <div class="card-footer-row">
+      <span class="muted" id="shortcutsHint">Shortcuts: <kbd>Tab</kbd> new test · <kbd>Esc</kbd> reset</span>
+      <button class="btn" id="restartBtn">↻ Restart</button>
+    </div>
+  </div>
+
+  <!-- Results -->
+  <div class="results-panel" id="resultsPanel">
+    <div class="results-header">
+      <h2>Results</h2>
+      <span class="best-badge hidden" id="resBestBadge">★ New personal best</span>
+    </div>
+    <div class="results-grid">
+      <div class="result-stat"><div class="rv" id="resWpm">0</div><div class="rl">WPM</div></div>
+      <div class="result-stat"><div class="rv" id="resAcc">0%</div><div class="rl">Accuracy</div></div>
+      <div class="result-stat"><div class="rv" id="resRaw">0</div><div class="rl">Raw WPM</div></div>
+      <div class="result-stat"><div class="rv" id="resChars">0/0</div><div class="rl">Correct/Wrong</div></div>
+    </div>
+    <canvas id="resChart"></canvas>
+    <div class="save-row">
+      <input type="text" id="playerNameInput" placeholder="Your name" maxlength="18" />
+      <button class="btn btn-primary" id="saveScoreBtn">Save to leaderboard</button>
+      <button class="btn" id="tryAgainBtn">Try again</button>
+      <span class="muted" id="resTime" style="display:none;"></span>
+    </div>
+  </div>
+
+  <!-- Leaderboard + Personal bests + Settings -->
+  <div class="panels-grid">
+    <div class="panel">
+      <h3>🏆 Local leaderboard</h3>
+      <ul class="lb-list" id="leaderboardList"></ul>
+    </div>
+    <div class="panel">
+      <h3>⚡ Personal bests</h3>
+      <div class="bests-grid" id="bestsGrid"></div>
+    </div>
+  </div>
+
+  <div class="panel" style="margin-top:18px;">
+    <h3>⚙️ Settings</h3>
+    <div class="settings-panel">
+      <label class="switch">
+        <input type="checkbox" id="soundToggle" checked />
+        <span class="slider-track"></span>
+      </label>
+      <span class="muted">Sound effects</span>
+      <input type="range" id="volumeSlider" min="0" max="1" step="0.05" value="0.4" />
+      <span class="muted">Volume</span>
+    </div>
+  </div>
+
+  <p class="footer-note">Built with vanilla HTML, CSS &amp; JavaScript · No paste allowed · Results stored locally in your browser</p>
+</div>
+
+<script src="js/words.js"></script>
+<script src="js/storage.js"></script>
+<script src="js/sounds.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

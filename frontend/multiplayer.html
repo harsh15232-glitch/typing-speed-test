@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Multiplayer race — Keystroke</title>
+<link rel="stylesheet" href="css/style.css" />
+<link rel="stylesheet" href="css/multiplayer.css" />
+</head>
+<body>
+<div class="shell mp-shell">
+  <header class="topbar">
+    <div class="brand"><span class="dot"></span> Keystroke</div>
+    <nav class="nav-links">
+      <a class="btn btn-ghost" href="index.html">← Solo practice</a>
+    </nav>
+  </header>
+
+  <!-- LOBBY -->
+  <section id="lobbyView">
+    <div class="mp-lobby">
+      <h2>Race friends or strangers, live</h2>
+      <p class="muted">Pick a duration and difficulty, then find an opponent or share a room code.</p>
+
+      <div class="controls-bar" style="justify-content:center; margin: 20px 0;">
+        <div class="control-group">
+          <span class="control-label">Duration</span>
+          <div class="chip-row" id="mpDurationChips">
+            <button class="chip active" data-duration="60">1 min</button>
+            <button class="chip" data-duration="180">3 min</button>
+            <button class="chip" data-duration="300">5 min</button>
+            <button class="chip" data-duration="420">7 min</button>
+            <button class="chip" data-duration="600">10 min</button>
+            <button class="chip" data-duration="900">15 min</button>
+          </div>
+        </div>
+        <div class="control-group">
+          <span class="control-label">Difficulty</span>
+          <div class="chip-row" id="mpDifficultyChips">
+            <button class="chip" data-difficulty="easy">Easy</button>
+            <button class="chip active" data-difficulty="medium">Medium</button>
+            <button class="chip" data-difficulty="hard">Hard</button>
+            <button class="chip" data-difficulty="quotes">Quotes</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="field" style="max-width:280px; margin: 0 auto 14px;">
+        <input type="text" id="guestNameInput" placeholder="Display name" maxlength="18"
+          style="width:100%; font-family:var(--font-mono); background:var(--surface-2); border:1px solid var(--border); color:var(--text); padding:12px 14px; border-radius:9px; outline:none; text-align:center;" />
+      </div>
+
+      <button class="btn btn-primary" id="quickMatchBtn">⚡ Quick match</button>
+      <div style="margin-top:18px; display:flex; gap:10px; justify-content:center; flex-wrap:wrap;">
+        <button class="btn" id="createRoomBtn">Create private room</button>
+        <input type="text" id="roomCodeInput" placeholder="Room code" maxlength="5"
+          style="font-family:var(--font-mono); text-transform:uppercase; width:110px; background:var(--surface-2); border:1px solid var(--border); color:var(--text); padding:10px 12px; border-radius:9px; outline:none;" />
+        <button class="btn" id="joinRoomBtn">Join room</button>
+      </div>
+      <div class="mp-status" id="mpStatus"></div>
+    </div>
+  </section>
+
+  <!-- ROOM / RACE VIEW -->
+  <section id="raceView" class="hidden">
+    <div class="mp-room-info">
+      <span class="room-code">Room: <strong id="roomCodeLabel">—</strong></span>
+      <button class="btn btn-ghost" id="startRaceBtn">Start race (host only)</button>
+      <button class="btn btn-ghost" id="leaveRoomBtn">Leave</button>
+    </div>
+
+    <div class="mp-countdown hidden" id="countdownDisplay"></div>
+
+    <div class="racers" id="racersList"></div>
+
+    <div class="stats-strip hidden" id="mpStatsStrip">
+      <div class="stat-box"><div class="stat-value" id="mpWpmLive">0</div><div class="stat-label">WPM</div></div>
+      <div class="stat-box"><div class="stat-value" id="mpAccLive">100%</div><div class="stat-label">Accuracy</div></div>
+      <div class="stat-box"><div class="stat-value" id="mpTimeLive">00:00</div><div class="stat-label">Time left</div></div>
+    </div>
+
+    <div class="typing-card hidden" id="mpTypingCard">
+      <div class="typing-area" id="mpTypingArea">
+        <div class="words-display" id="mpWordsDisplay"></div>
+        <div class="caret" id="mpCaret"></div>
+        <textarea class="hidden-input" id="mpHiddenInput" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></textarea>
+      </div>
+    </div>
+
+    <div class="panel hidden" id="mpResultsPanel">
+      <h3>🏁 Race results</h3>
+      <div class="mp-results-list" id="mpResultsList"></div>
+      <button class="btn btn-primary" id="raceAgainBtn" style="margin-top:16px;">Back to lobby</button>
+    </div>
+  </section>
+</div>
+
+<script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+<script src="js/config.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/sounds.js"></script>
+<script src="js/multiplayer.js"></script>
+</body>
+</html>
